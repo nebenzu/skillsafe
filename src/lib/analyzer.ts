@@ -71,9 +71,11 @@ const PERMISSION_PATTERNS = [
 export async function parseClawHubUrl(url: string): Promise<{ owner: string; repo: string } | null> {
   // Handle various ClawHub URL formats
   const patterns = [
-    /github\.com\/([^\/]+)\/([^\/]+)/i,
-    /clawhub\.com\/skills\/([^\/]+)\/([^\/]+)/i,
-    /^([^\/]+)\/([^\/]+)$/,
+    /github\.com\/([^\/]+)\/([^\/\?#]+)/i,
+    /clawhub\.ai\/([^\/]+)\/([^\/\?#]+)/i,
+    /clawhub\.com\/([^\/]+)\/([^\/\?#]+)/i,
+    /clawhub\.com\/skills\/([^\/]+)\/([^\/\?#]+)/i,
+    /^([^\/]+)\/([^\/\?#]+)$/,
   ];
   
   for (const pattern of patterns) {
