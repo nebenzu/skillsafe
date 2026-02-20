@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useSession, signIn } from 'next-auth/react';
 
 interface AnalysisResult {
   trustScore: number;
@@ -20,6 +21,7 @@ interface AnalysisResult {
 }
 
 export default function Home() {
+  const { data: session } = useSession();
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AnalysisResult | null>(null);
@@ -91,7 +93,18 @@ export default function Home() {
           <div className="flex items-center gap-6 text-sm text-slate-400">
             <a href="#features" className="hover:text-white transition">Features</a>
             <a href="#pricing" className="hover:text-white transition">Pricing</a>
-            <a href="https://twitter.com/skillsafe_" className="hover:text-white transition">Twitter</a>
+            {session ? (
+              <a href="/dashboard" className="px-4 py-2 bg-white/10 hover:bg-white/20 rounded-lg text-white transition">
+                Dashboard
+              </a>
+            ) : (
+              <button
+                onClick={() => signIn('github')}
+                className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-cyan-500 hover:from-emerald-400 hover:to-cyan-400 rounded-lg text-white font-medium transition"
+              >
+                Sign In
+              </button>
+            )}
           </div>
         </nav>
 
